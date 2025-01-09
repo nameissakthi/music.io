@@ -15,16 +15,16 @@ const Banner = () => {
       }
       return preValue+1
     })
-  }, 500)
+  }, 100)
 
   return (
     <div className="flex justify-center w-full">
-      <div className={cn(`${theme==="dark"?"bg-slate-800/95":"bg-slate-600/90"} rounded-lg py-10 lg:px-20 size-fit gap-y-6 flex flex-col w-[95%] md:grid grid-cols-1 lg:grid-cols-2`)}>
+      <div className={cn(`bg-chart-5 rounded-lg py-10 lg:px-20 size-fit gap-y-6 flex flex-col w-[95%] md:grid grid-cols-1 lg:grid-cols-2`)}>
         <div className="flex flex-col">
           <div className="flex items-center justify-center md:flex-row flex-col">
             <img src="/logo.png" alt="logo" className="w-32" />
             <h1 className="lg:text-5xl text-3xl md:text-5xl">
-              Listen to the <span className="bg-green-600 px-2">Rhythm</span>
+              Listen to the <span className="bg-green-600 px-2 rounded-lg font-serif text-white/75">Rhythm</span>
             </h1>
           </div>
           <div className="flex justify-center">

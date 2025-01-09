@@ -64,17 +64,9 @@ const Artists = () => {
             <h1 className="text-4xl text-foreground font-semibold">Popular Artists</h1>
             <hr className="w-[90%] border-2 mt-2 border-green-600" />
         </div>
-      <div className="flex justify-center">
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className={cn(`w-full max-w-[${artists.filter(predicate=>predicate.popularLevel>70).length>5?"70%":"60%"}]` )}
-        >
-          <CarouselContent className="max-w-sm">
-            {artists.length>1? artists.filter(predicate=>predicate.popularLevel>70).map((artist, index) => (
-              <CarouselItem key={index} className="md:basis-[40%] basis-1/2 lg:basis-[50%]">
-                <div className="p-1 text-center">
+      <div className="md:flex items-center justify-center grid grid-cols-2 ">
+      {artists.length>1? artists.filter(predicate=>predicate.popularLevel>70).slice(0,5).map((artist, index) => (
+                <div className="p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2" key={index}>
                   <Card className="rounded-full">
                     <CardContent className="flex aspect-square items-center justify-center p-0">
                       <img
@@ -86,14 +78,9 @@ const Artists = () => {
                   </Card>
                   <span className="text-xs text-foreground font-semibold hidden md:block">{artist.name}</span>
                 </div>
-              </CarouselItem>
             )): <div className="flex justify-center items-center text-2xl">
                     <p>No Popular Artists Found</p>
                 </div>}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
       </div>
     </div>
   );
