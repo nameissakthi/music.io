@@ -1,7 +1,11 @@
 "use client"
+import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 import React, { useState } from "react";
 
 const Banner = () => {
+
+  const { theme } = useTheme()
 
   const [progress, setProgress] = useState<number>(20);
   setTimeout(()=>{
@@ -15,7 +19,7 @@ const Banner = () => {
 
   return (
     <div className="flex justify-center w-full">
-      <div className="bg-slate-800/95 rounded-lg py-10 lg:px-20 size-fit gap-y-6 flex flex-col w-[95%] md:grid grid-cols-1 lg:grid-cols-2">
+      <div className={cn(`${theme==="dark"?"bg-slate-800/95":"bg-slate-600/90"} rounded-lg py-10 lg:px-20 size-fit gap-y-6 flex flex-col w-[95%] md:grid grid-cols-1 lg:grid-cols-2`)}>
         <div className="flex flex-col">
           <div className="flex items-center justify-center md:flex-row flex-col">
             <img src="/logo.png" alt="logo" className="w-32" />
