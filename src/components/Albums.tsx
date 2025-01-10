@@ -8,7 +8,7 @@ interface Album {
   popularLevel : number
 }
 
-const Album = () => {
+const Albums = () => {
   const [albums, setAlbums] = useState<Array<Album>>([
     {
       albumName: "En Thottu",
@@ -72,11 +72,11 @@ const Album = () => {
             .slice(0, 4)
             .map((album, index) => (
               <div
-                className="p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2 hover:scale-105 transition-all ease-in-out"
+                className="p-1 text-center w-36 sm:w-60 md:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2 hover:scale-105 transition-all ease-in-out"
                 key={index}
               >
                 <Card className="mb-2 hover:shadow-md bg-chart-3/75 shadow-inner">
-                  <CardContent className="flex aspect-square items-center justify-center text-white text-lg font-bold p-1">
+                  <CardContent className="flex aspect-square items-center justify-center text-white text-xs sm:text-base sm:font-bold p-1">
                     {album.albumName}
                   </CardContent>
                 </Card>
@@ -95,4 +95,4 @@ const Album = () => {
   );
 };
 
-export default Album;
+export default Albums;

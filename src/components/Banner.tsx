@@ -1,14 +1,20 @@
 "use client"
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Banner = () => {
 
   const { theme } = useTheme()
 
   const [progress, setProgress] = useState<number>(20);
-  setTimeout(()=>{
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(()=>{
+    setMounted(true)
+  },[])
+
+  mounted && setTimeout(()=>{
     setProgress((preValue)=>{
       if(preValue==100){
         return 20;
