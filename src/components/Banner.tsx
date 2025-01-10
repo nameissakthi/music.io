@@ -28,10 +28,10 @@ const Banner = () => {
             </h1>
           </div>
           <div className="flex justify-center">
-            <p className="text-2xl">Create Your <span>Own Songs <span className="lg:text-5xl text-4xl">♫𝄞♪</span></span></p>
+            <p className="text-2xl hidden sm:block">Create Your <span>Own Songs <span className="lg:text-5xl text-4xl">♫𝄞♪</span></span></p>
           </div>
         </div>
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center sm:w-full w-[95%] relative left-1/2 -translate-x-1/2 sm:static sm:left-0 sm:-translate-x-0">
           <div className="w-full">
             <div className="w-full max-w-[320px] md:max-w-[450px] mx-auto bg-white shadow-md rounded-lg overflow-hidden dark:bg-zinc-900">
               <div className="flex justify-between items-center px-6 py-4">
@@ -51,10 +51,10 @@ const Banner = () => {
                   </svg>
                   <div className="mx-3">
                     <h3 className="text-lg font-medium text-gray-700 dark:text-gray-200">
-                      Timro Mann
+                      Maalai Karukkalil
                     </h3>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Dibbya Subba
+                      Backialakshimi
                     </p>
                   </div>
                 </div>

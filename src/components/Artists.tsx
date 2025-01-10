@@ -3,14 +3,6 @@ import * as React from "react";
 import { useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 
 interface Artist {
   name: string;
@@ -65,9 +57,9 @@ const Artists = () => {
             <hr className="w-[90%] border-2 mt-2 border-green-600" />
         </div>
       <div className="md:flex items-center justify-center grid grid-cols-2 ">
-      {artists.length>1? artists.filter(predicate=>predicate.popularLevel>70).slice(0,5).map((artist, index) => (
-                <div className="p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2" key={index}>
-                  <Card className="rounded-full">
+      {artists.length>1? artists.filter(predicate=>predicate.popularLevel>70).slice(0, 4).map((artist, index) => (
+                <div className="transition-all delay-75 ease-in-out hover:scale-105 p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2" key={index}>
+                  <Card className="rounded-full hover:shadow-2xl mb-2">
                     <CardContent className="flex aspect-square items-center justify-center p-0">
                       <img
                         src={artist.profile}
