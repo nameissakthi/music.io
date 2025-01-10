@@ -34,7 +34,7 @@ const Banner = () => {
             </h1>
           </div>
           <div className="flex justify-center">
-            <p className="text-2xl hidden sm:block">Create Your <span>Own Songs <span className="lg:text-5xl text-4xl">♫𝄞♪</span></span></p>
+            <p className="text-2xl hidden sm:block">Create Your <span>Own Songs <span className="text-4xl">♫𝄞♪</span></span></p>
           </div>
         </div>
         <div className="flex justify-center sm:w-full w-[95%] relative left-1/2 -translate-x-1/2 sm:static sm:left-0 sm:-translate-x-0">

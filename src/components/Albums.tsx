@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "./ui/button";
 
 interface Album {
   albumName: string;
@@ -60,11 +61,14 @@ const Albums = () => {
   return (
     <div className="lg:px-20 px-2">
       <div className="flex items-center flex-col mb-4">
-        <h1 className="text-4xl text-foreground font-semibold">
-          Popular Albums
-        </h1>
-        <hr className="w-[90%] border-2 mt-2 border-green-600" />
-      </div>
+            <div className="flex justify-between w-[90%] items-center">
+              <h1 className="text-xl sm:text-2xl md:text-3xl text-foreground font-semibold">Popular Albums</h1>
+              <Button className="p-0.5 text-xs md:text-base active:scale-95 transition-all ease-in-out text-white px-2" >
+                See More
+              </Button>
+            </div>
+            <hr className="w-[90%] border-2 mt-2 border-green-600" />
+        </div>
       <div className="md:flex items-center justify-center grid grid-cols-2 ">
         {albums.length > 1 ? (
           albums

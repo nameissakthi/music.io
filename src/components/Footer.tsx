@@ -12,10 +12,10 @@ export default function Footer() {
                 <div className="flex-1 flex justify-center">
                     <div className="grid grid-cols-2 w-full md:w-[70%]">
                         <div>
-                            <h1 className="font-semibold text-lg">Useful Links</h1>
+                            <h1 className="font-semibold text-white text-lg">Useful Links</h1>
                             <div className="flex flex-col items-start self-start">
                                 <Button variant={"link"} className="text-white/80">
-                                    <Link href="#">Home</Link>
+                                    <Link href="/">Home</Link>
                                 </Button>
                                 <Button variant={"link"} className="text-white/80">
                                     <Link href="#">About Us</Link>
@@ -26,7 +26,7 @@ export default function Footer() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="font-semibold text-lg">Safety & Privacy</h1>
+                            <h1 className="font-semibold text-white text-lg">Safety & Privacy</h1>
                             <div className="flex flex-col items-start">
                                 <Button variant={"link"} className="text-white/80">
                                     <Link href="#">Terms & Conditions</Link>

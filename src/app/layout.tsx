@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Wrapper from "@/components/Wrapper";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+            <ToastContainer />
             <Navbar />
             <Wrapper>{children}</Wrapper>
             <Footer />
