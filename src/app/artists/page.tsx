@@ -1,9 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Music, User } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useState } from "react";
+import { Music, Search, User } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 interface Artist {
@@ -51,40 +50,53 @@ export default function page() {
       popularLevel: 80,
     },
   ]);
-  const [search, setSearch] = useState<string>("")
+  const [search, setSearch] = useState<string>("");
+  const [searchArtists, setSearchArtists] = useState<Array<Artist>>([]);
 
   const searchArtist = () => {
     try {
-      if(search.trim()==""){
-        toast.warning("Please Enter a value", { 
+      if (search.trim() == "") {
+        toast.warning("Please Enter a value", {
           autoClose: 1000,
           hideProgressBar: true,
           theme: "colored",
-          position: "top-center"
-         })
-      }else{
-        if(!artists){
+          position: "top-center",
+        });
+      } else {
+        if (!artists) {
           toast.error("Something went wrong. Please reload", {
             autoClose: 1000,
             hideProgressBar: true,
             theme: "colored",
-            position: "top-center"
-          })
-        }else{
-          setArtists(artists.filter(artist=>artist.name.toLowerCase().includes(search.toLowerCase())))
-          setSearch("")
+            position: "top-center",
+          });
+        } else {
+          setSearchArtists(
+            artists.filter((artist) =>
+              artist.name.toLowerCase().includes(search.toLowerCase())
+            )
+          );
+          setSearch("");
         }
       }
-    } catch (error:any) {
-      toast.error(error?error.message:"Something went wrong. Please reload", {
-        autoClose: 1000,
-        hideProgressBar: true,
-        theme: "colored",
-        position: "top-center"
-      })
+    } catch (error: any) {
+      toast.error(
+        error ? error.message : "Something went wrong. Please reload",
+        {
+          autoClose: 1000,
+          hideProgressBar: true,
+          theme: "colored",
+          position: "top-center",
+        }
+      );
     }
-  }
+  };
 
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      searchArtist();
+    }
+  };
 
   return (
     <div>
@@ -99,42 +111,85 @@ export default function page() {
             className="h-full w-80 py-2 px-3 bg-transparent border border-green-600 rounded-l-xl text-foreground"
             placeholder="Search..."
             value={search}
-            onChange={e=>setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e: any) => handleKeyPress(e)}
+            autoFocus
           />
-          <Button className="rounded-r-xl rounded-l-none h-full" onClick={searchArtist}>Search</Button>
+          <Button
+            className="rounded-r-xl rounded-l-none h-full"
+            onClick={searchArtist}
+          >
+            <Search />
+          </Button>
         </div>
       </div>
       <div className="flex justify-center">
         <div className="w-[95%]">
           <div className="flex flex-wrap gap-y-4">
-            {artists && artists.length > 1 ? (
-              artists.map((artist, index) => (
-                <div
-                  className="transition-all delay-75 ease-in-out hover:scale-105 p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2"
-                  key={index}
-                >
-                  <Card className="rounded-full hover:shadow-2xl mb-2">
-                    <CardContent className="flex aspect-square items-center justify-center p-0">
-                      {artist.profile ? (
-                        <img
-                          src={artist.profile}
-                          alt="profile"
-                          className="rounded-full aspect-square pointer-events-none select-none"
-                        />
-                      ) : (
-                        <User />
-                      )}
-                    </CardContent>
-                  </Card>
-                  <span className="text-xs text-foreground font-semibold hidden md:block">
-                    {artist.name}
-                  </span>
-                </div>
-              ))
+            {searchArtists.length == 0 ? (
+              <>
+                {artists && artists.length > 1 ? (
+                  artists.map((artist, index) => (
+                    <div
+                      className="transition-all delay-75 ease-in-out hover:scale-105 p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2"
+                      key={index}
+                    >
+                      <Card className="rounded-full hover:shadow-2xl mb-2">
+                        <CardContent className="flex aspect-square items-center justify-center p-0">
+                          {artist.profile ? (
+                            <img
+                              src={artist.profile}
+                              alt="profile"
+                              className="rounded-full aspect-square pointer-events-none select-none"
+                            />
+                          ) : (
+                            <User />
+                          )}
+                        </CardContent>
+                      </Card>
+                      <span className="text-xs text-foreground font-semibold hidden md:block">
+                        {artist.name}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center text-2xl w-full h-[50vh]">
+                    <p className="text-center">No Artists Found</p>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex justify-center items-center text-2xl w-full h-[50vh]">
-                <p className="text-center">No Artists Found</p>
-              </div>
+              <>
+                {searchArtists ? (
+                  searchArtists.map((artist, index) => (
+                    <div
+                      className="transition-all delay-75 ease-in-out hover:scale-105 p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2"
+                      key={index}
+                    >
+                      <Card className="rounded-full hover:shadow-2xl mb-2">
+                        <CardContent className="flex aspect-square items-center justify-center p-0">
+                          {artist.profile ? (
+                            <img
+                              src={artist.profile}
+                              alt="profile"
+                              className="rounded-full aspect-square pointer-events-none select-none"
+                            />
+                          ) : (
+                            <User />
+                          )}
+                        </CardContent>
+                      </Card>
+                      <span className="text-xs text-foreground font-semibold hidden md:block">
+                        {artist.name}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center text-2xl w-full h-[50vh]">
+                    <p className="text-center">No Artists Found</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

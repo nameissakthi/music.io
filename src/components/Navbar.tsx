@@ -32,7 +32,7 @@ export default function Navbar() {
     <div className="w-full flex justify-between px-4 py-1 items-center bg-slate-900 mb-1 sticky top-0 z-50">
       <div>
         <Link href="/" className="flex items-center gap-0">
-          <img src="/logo.png" alt="logo" className="md:w-20 w-16" />
+          <img src="/logo.png" alt="logo" className="md:w-20 w-16 pointer-events-none select-none" />
           <h1 className="text-center hidden md:block text-4xl self-end mb-4 font-bold text-white">
             Music io
           </h1>

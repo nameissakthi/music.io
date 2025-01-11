@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export default function Footer() {
     return (
-        <footer className="w-full flex flex-col md:flex-row justify-between p-4 items-center bg-slate-900/90 mt-1">
+        <footer className="w-full flex flex-col md:flex-row justify-between p-4 items-center bg-slate-900/90 mt-4">
             <div className="sm:w-full md:flex-1 flex flex-col justify-center items-center sm:flex-row mb-3 md:mb-0 sm:gap-10 md:gap-0">
                 <div className="flex items-center gap-0 mb-3 sm:mb-0">
                     <img src="/logo.png" alt="logo" className="w-16 sm:w-28" />
