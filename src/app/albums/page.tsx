@@ -4,64 +4,41 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
-import { Album, Search } from "lucide-react";
+import { Album, Loader, Search } from "lucide-react";
 
 interface Album {
-  albumName: string;
-  artist: string;
-  popularLevel: number;
+  id?: number;
+  albumname: string;
+  artistname: string;
+  popularlevel: number;
+  email: string;
 }
 
 const page = () => {
   const [search, setSearch] = useState<string>("");
   const [searchAlbums, setSearchAlbums] = useState<Array<Album>>([]);
-  const [albums, setAlbums] = useState<Array<Album>>([
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-  ]);
+  const [albums, setAlbums] = useState<Array<Album>>([]);
+
+  const fetchAlbums = async () => {
+    try {
+      await fetch("/api/albums")
+        .then(res=>res.json())
+        .then(res=>{
+          if(res.success) setAlbums(res.albums)
+        })
+        .catch(err=>console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchAlbums()
+  }, [])
+
+  useEffect(()=>{
+    console.log(albums)
+  }, [albums])
 
   const searchAlbum = () => {
     try {
@@ -83,7 +60,7 @@ const page = () => {
         } else {
           setSearchAlbums(
             albums.filter((album) =>
-              album.albumName.toLowerCase().includes(search.toLowerCase()) || album.artist.toLowerCase().includes(search.toLowerCase())
+              album.albumname.toLowerCase().includes(search.toLowerCase()) || album.artistname.toLowerCase().includes(search.toLowerCase())
             )
           );
           setSearch("")
@@ -143,17 +120,17 @@ const page = () => {
                     >
                       <Card className="mb-2 hover:shadow-md bg-chart-3/75 shadow-inner">
                         <CardContent className="flex aspect-square items-center justify-center text-white text-xs sm:text-base sm:font-bold p-1">
-                          {album.albumName}
+                          {album.albumname}
                         </CardContent>
                       </Card>
                       <span className="text-xs text-foreground font-semibold hidden md:block">
-                        {album.artist}
+                        {album.artistname}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-center items-center text-2xl">
-                    <p>No Popular Album Found</p>
+                  <div className="flex justify-center items-center text-2xl h-[50vh]">
+                    <Loader speed={"10"} size={50} rotate={"20"} />
                   </div>
                 )}
               </>
@@ -167,17 +144,17 @@ const page = () => {
                     >
                       <Card className="mb-2 hover:shadow-md bg-chart-3/75 shadow-inner">
                         <CardContent className="flex aspect-square items-center justify-center text-white text-xs sm:text-base sm:font-bold p-1">
-                          {album.albumName}
+                          {album.albumname}
                         </CardContent>
                       </Card>
                       <span className="text-xs text-foreground font-semibold hidden md:block">
-                        {album.artist}
+                        {album.artistname}
                       </span>
                     </div>
                   ))
                 ) : (
                   <div className="flex justify-center items-center text-2xl">
-                    <p>No Popular Album Found</p>
+                    <p>No Album Found</p>
                   </div>
                 )}
               </>
