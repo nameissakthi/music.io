@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "./ui/button";
@@ -15,38 +15,24 @@ interface Artist {
 }
 
 const Artists = () => {
-  const [artists, setArtists] = useState<Array<Artist>>([
-    {
-      name: "G V Prakash",
-      profile:
-        "https://in.bmscdn.com/iedb/artist/images/website/poster/large/g-v-prakash-kumar-3973-15-02-2022-01-57-26.jpg",
-        popularLevel : 90,
-    },
-    {
-      name: "A R Rahman",
-      profile:
-        "https://songsall.com/wp-content/uploads/2024/08/Untitled-design-6.png",
-        popularLevel : 90,
-    },
-    {
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-        popularLevel : 90,
-    },
-    {
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-        popularLevel : 70,
-    },
-    {
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-        popularLevel : 80,
-    },
-  ]);
+  const [artists, setArtists] = useState<Array<Artist>>([]);
+
+  const fetchArtists = () => {
+      try {
+        fetch("/api/artists")
+          .then(res=>res.json())
+          .then(res=>{
+            if(res.success) setArtists(res.artists)
+          })
+          .catch(err=>console.log(err.message))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  
+    useEffect(()=>{
+      fetchArtists()
+    },[])
 
   return (
     <div className="lg:px-20 px-2">
@@ -75,7 +61,7 @@ const Artists = () => {
                   </Card>
                   <span className="text-xs text-foreground font-semibold hidden md:block">{artist.name}</span>
                 </div>
-            )): <div className="flex justify-center items-center text-2xl">
+            )): <div className="flex justify-center items-center text-base h-32 md:h-40 md:text-2xl col-span-2">
                     <p>No Popular Artists Found</p>
                 </div>}
       </div>
@@ -83,4 +69,4 @@ const Artists = () => {
   );
 };
 
-export default Artists;
+export default Artists

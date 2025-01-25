@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { Album, Loader, Search } from "lucide-react";
+import { lazy } from "react";
 
 interface Album {
   id?: number;
@@ -16,12 +17,12 @@ interface Album {
 
 const page = () => {
   const [search, setSearch] = useState<string>("");
-  const [searchAlbums, setSearchAlbums] = useState<Array<Album>>([]);
+  const [searchAlbums, setSearchAlbums] = useState<Array<Album>>([])
   const [albums, setAlbums] = useState<Array<Album>>([]);
 
-  const fetchAlbums = async () => {
+  const fetchAlbums = () => {
     try {
-      await fetch("/api/albums")
+      fetch("/api/albums")
         .then(res=>res.json())
         .then(res=>{
           if(res.success) setAlbums(res.albums)
@@ -35,10 +36,6 @@ const page = () => {
   useEffect(()=>{
     fetchAlbums()
   }, [])
-
-  useEffect(()=>{
-    console.log(albums)
-  }, [albums])
 
   const searchAlbum = () => {
     try {
@@ -86,7 +83,7 @@ const page = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[60vh]">
       <div className="flex flex-col justify-between sm:flex-row items-center mb-4 sm:mb-2">
         <h1 className="text-4xl flex items-center gap-2 mb-4">Albums <Album size={"35"} color="skyblue" /></h1>
         <div className="flex items-center h-10">
@@ -112,7 +109,7 @@ const page = () => {
           <div className="flex flex-wrap gap-y-4 justify-center">
             {searchAlbums.length == 0 ? (
               <>
-                {albums.length > 1 ? (
+                {albums.length >= 1 ? (
                   albums.map((album, index) => (
                     <div
                       className="p-1 text-center w-36 sm:w-60 md:w-48 px-3 md:static md:left-0 md:-translate-x-0 hover:scale-105 transition-all ease-in-out"
@@ -129,7 +126,7 @@ const page = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-center items-center text-2xl h-[50vh]">
+                  <div className="flex justify-center items-center text-2xl mt-40">
                     <Loader speed={"10"} size={50} rotate={"20"} />
                   </div>
                 )}

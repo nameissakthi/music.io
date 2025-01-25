@@ -29,24 +29,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><ClerkProvider>
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-            <ToastContainer />
-            <Navbar />
-            <Wrapper>{children}</Wrapper>
-            <Footer />
           
+              <ToastContainer />
+              <Navbar />
+              <Wrapper>{children}</Wrapper>
+              <Footer />
+            
         </ThemeProvider>
-        </ClerkProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Music, Search, User } from "lucide-react";
+import { Loader, Music, Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -12,51 +12,15 @@ interface Artist {
   popularLevel: number;
 }
 
-export default function page() {
-  const [artists, setArtists] = useState<Array<Artist>>([
-    {
-      id: 1,
-      name: "G V Prakash",
-      profile:
-        "https://in.bmscdn.com/iedb/artist/images/website/poster/large/g-v-prakash-kumar-3973-15-02-2022-01-57-26.jpg",
-      popularLevel: 90,
-    },
-    {
-      id: 2,
-      name: "A R Rahman",
-      profile:
-        "https://songsall.com/wp-content/uploads/2024/08/Untitled-design-6.png",
-      popularLevel: 90,
-    },
-    {
-      id: 3,
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-      popularLevel: 90,
-    },
-    {
-      id: 4,
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-      popularLevel: 70,
-    },
-    {
-      id: 5,
-      name: "SAM C S",
-      profile:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNELyItK42eqM0zCpPUj9dpK7lzhJOcP0YpA&s",
-      popularLevel: 80,
-    },
-  ]);
+const ArtistsPage = () => {
+  const [artists, setArtists] = useState<Array<Artist>>([]);
   const [search, setSearch] = useState<string>("");
   const [searchArtists, setSearchArtists] = useState<Array<Artist>>([]);
 
   const searchArtist = () => {
     try {
-      if (search.trim() == "") {
-        toast.warning("Please Enter a value", {
+      if (search.trim() === "") {
+        toast.warning("Please enter a value", {
           autoClose: 1000,
           hideProgressBar: true,
           theme: "colored",
@@ -81,7 +45,7 @@ export default function page() {
       }
     } catch (error: any) {
       toast.error(
-        error ? error.message : "Something went wrong. Please reload",
+        error?.message || "Something went wrong. Please reload",
         {
           autoClose: 1000,
           hideProgressBar: true,
@@ -92,18 +56,32 @@ export default function page() {
     }
   };
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       searchArtist();
     }
   };
+
+  const fetchArtists = async () => {
+    try {
+      const response = await fetch("/api/artists");
+      const data = await response.json();
+      if (data.success) setArtists(data.artists);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArtists();
+  }, []);
 
   return (
     <div>
       <div className="flex flex-col justify-between sm:flex-row items-center mb-4 sm:mb-2">
         <h1 className="text-4xl flex items-center gap-2 mb-4">
           Artists
-          <Music size={"35"} color="yellow" />
+          <Music size={35} color="yellow" />
         </h1>
         <div className="flex items-center h-10">
           <input
@@ -112,7 +90,7 @@ export default function page() {
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e: any) => handleKeyPress(e)}
+            onKeyDown={handleKeyPress}
             autoFocus
           />
           <Button
@@ -126,9 +104,9 @@ export default function page() {
       <div className="flex justify-center">
         <div className="w-[95%]">
           <div className="flex flex-wrap gap-y-4">
-            {searchArtists.length == 0 ? (
+            {searchArtists.length === 0 ? (
               <>
-                {artists && artists.length > 1 ? (
+                {artists && artists.length >= 1 ? (
                   artists.map((artist, index) => (
                     <div
                       className="transition-all delay-75 ease-in-out hover:scale-105 p-1 text-center w-32 sm:w-48 px-3 md:static md:left-0 md:-translate-x-0 relative left-1/2 -translate-x-1/2"
@@ -153,8 +131,8 @@ export default function page() {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-center items-center text-2xl w-full h-[50vh]">
-                    <p className="text-center">No Artists Found</p>
+                  <div className="flex justify-center w-full items-center text-2xl h-[50vh]">
+                    <Loader speed={10} size={50} rotate={20} />
                   </div>
                 )}
               </>
@@ -196,4 +174,6 @@ export default function page() {
       </div>
     </div>
   );
-}
+};
+
+export default ArtistsPage;

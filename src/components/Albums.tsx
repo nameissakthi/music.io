@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -11,53 +11,28 @@ interface Album {
 }
 
 const Albums = () => {
-  const [albums, setAlbums] = useState<Array<Album>>([
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-    {
-      albumName: "En Thottu",
-      artist: "S. P. Balasubrahmanyam and Swarnalatha",
-      popularLevel: 80,
-    },
-    {
-      albumName: "Nooraandukku Oru Murai",
-      artist: "Devi and Pandit Gopal Sharma",
-      popularLevel: 70,
-    },
-    {
-      albumName: "Sindhiya Venmani",
-      artist: "K. J. Yesudas and P. Susheela",
-      popularLevel: 50,
-    },
-  ]);
+  const [albums, setAlbums] = useState<Array<Album>>([]);
+
+  const fetchAlbums = () => {
+      try {
+        fetch("/api/albums")
+          .then(res=>res.json())
+          .then(res=>{
+            if(res.success) setAlbums(res.albums)
+          })
+          .catch(err=>console.log(err))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    useEffect(()=>{
+      console.log(albums)
+    },[albums])
+  
+    useEffect(()=>{
+      fetchAlbums()
+    }, [])
 
   return (
     <div className="lg:px-20 px-2">
@@ -75,7 +50,7 @@ const Albums = () => {
         <hr className="w-[90%] border-2 mt-2 border-green-600" />
       </div>
       <div className="md:flex items-center justify-center grid grid-cols-2 ">
-        {albums.length > 1 ? (
+        {albums.length != 0 && albums.filter((predicate) => predicate.popularLevel > 60).length!=0 ? (
           albums
             .filter((predicate) => predicate.popularLevel > 60)
             .slice(0, 4)
@@ -95,8 +70,8 @@ const Albums = () => {
               </div>
             ))
         ) : (
-          <div className="flex justify-center items-center text-2xl">
-            <p>No Popular Album Found</p>
+          <div className="flex justify-center items-center text-base h-32 md:h-40 md:text-2xl col-span-2">
+            <p>No Popular Artists Found</p>
           </div>
         )}
       </div>
